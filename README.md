@@ -12,8 +12,8 @@ This repository documents my journey of learning SFML and modern C++ game develo
 ## Lessons Completed
 
 - [x] Lesson 1 - Window Creation & Event Handling
-- [ ] Lesson 2 - Rendering Pipeline
-- [ ] Lesson 3 - Shapes
+- [x] Lesson 2 - Rendering Pipeline
+- [x] Lesson 3 - Shapes, Coordinates and Positioning
 - [ ] Lesson 4 - Keyboard & Mouse Input
 - [ ] Lesson 5 - Time & Delta Time
 - [ ] Lesson 6 - Sprites & Textures
