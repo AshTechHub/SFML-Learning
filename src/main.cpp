@@ -5,36 +5,30 @@ using namespace std;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1915,600),"SFML Tutorial - Survival Game");
-    cout<<"Window created!";
+    sf::RenderWindow window(sf::VideoMode(1280,720),"SFML Tutorial - Survival Game");
+    cout<<"Window Created!\n";
     while(window.isOpen())
     {
-        
         sf::Event event;
+
         while(window.pollEvent(event))
         {
-            if(event.type==sf::Event::Closed)
+            if(event.type == sf::Event::Closed)
             {
-                cout<<"\nWindow close requested.";
+                cout<<"Window closed!\n";
                 window.close();
-            } 
-
-            if(event.type==sf::Event::KeyPressed)
-                cout<<"\nA key was pressed.";
-
-            if(event.type==sf::Event::MouseMoved)
-                cout<<"\nMouse moved.";
-
-            if(event.type==sf::Event::MouseButtonPressed)
-                cout<<"\nMouse button pressed.";
-
-           
+            }
         }
-    }
-    cout<<"Window collapsed!";
+        window.clear(sf::Color::Blue);
 
-    window.clear();
-    window.display();
+        sf::RectangleShape rect(sf::Vector2f(200.f,100.f));
+        rect.setFillColor(sf::Color::Green);
+
+        window.draw(rect);
+
+        window.display();
+
+    }
 
     return 0;
 }
