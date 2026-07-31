@@ -6,6 +6,7 @@ using namespace std;
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800,600),"SFML Tutorial - Survival Game");
+    window.setFramerateLimit(60);
     cout<<"Window created!\n";
 
     sf::RectangleShape rect(sf::Vector2f(200,100));
@@ -16,10 +17,15 @@ int main()
     circle.setFillColor(sf::Color::Red);
     circle.setPosition(0.f,0.f);
 
-    const float speed = 0.5f;
+    const float speed = 200.f;
+
+    sf::Clock clock;
 
     while(window.isOpen())
     {
+        sf::Time deltaTime = clock.restart();
+        //cout<<deltaTime.asSeconds()<<endl;
+
         sf::Event event;
 
         while(window.pollEvent(event))
@@ -35,26 +41,31 @@ int main()
             {
                 cout<<"Mouse: "<<event.mouseMove.x<<","<<event.mouseMove.y<<"\n";
             }
+
+            if(event.type == sf::Event::Closed)
+            {
+                window.close();
+            }
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            rect.move(0.f,-speed);
+            rect.move(0.f,-speed*deltaTime.asSeconds());
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
-            rect.move(0.f,speed);
+            rect.move(0.f,speed*deltaTime.asSeconds());
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-            rect.move(-speed,0.f);
+            rect.move(-speed*deltaTime.asSeconds(),0.f);
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-            rect.move(speed,0.f);
+            rect.move(speed*deltaTime.asSeconds(),0.f);
         }
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -74,13 +85,6 @@ int main()
         {
             circle.setFillColor(sf::Color::Red);
         }
-
-        // sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        // cout << mousePos.x << " " << mousePos.y << endl;
-
-        //sf::Vector2i rectPos = rect.getPosition(window)
-        //DON't know how to change background color by storing it in a variable
-        //Don't know how to compare the positions of 2 shapes to know when they collide
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {   cout<<"Window collapsed!\n";
