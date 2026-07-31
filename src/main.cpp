@@ -5,18 +5,18 @@ using namespace std;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1280,720),"SFML Tutorial - Survival Game");
-    cout<<"Window Created!\n";
+    sf::RenderWindow window(sf::VideoMode(800,600),"SFML Tutorial - Survival Game");
+    cout<<"Window created!\n";
 
-    sf::RectangleShape rect(sf::Vector2f(200.f,100.f));
-    rect.setFillColor(sf::Color::Green);//540,310
-    rect.setPosition(300.f,200.f);
-    rect.move(240.f,110.f);
+    sf::RectangleShape rect(sf::Vector2f(200,100));
+    rect.setFillColor(sf::Color::Green);
+    rect.setPosition(300.f,250.f);
 
     sf::CircleShape circle(50.f);
     circle.setFillColor(sf::Color::Red);
-    circle.setPosition(590.f,240.f);//590,310
-    circle.move(0.f,70.f);
+    circle.setPosition(0.f,0.f);
+
+    const float speed = 0.5f;
 
     while(window.isOpen())
     {
@@ -24,75 +24,75 @@ int main()
 
         while(window.pollEvent(event))
         {
-            if(event.type == sf::Event::Closed)
+            if(event.type == sf::Event::MouseButtonPressed)
             {
-                cout<<"Window closed!\n";
-                window.close();
+                if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                {
+                    cout<<"Bang!\n";
+                }
+            }
+            if(event.type == sf::Event::MouseMoved)//&& event.mouseButton.button == sf::Mouse::Left
+            {
+                cout<<"Mouse: "<<event.mouseMove.x<<","<<event.mouseMove.y<<"\n";
             }
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            rect.move(0.f,-0.5f);
-        }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        {
-            rect.move(-0.5f,0.f);
+            rect.move(0.f,-speed);
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
-            rect.move(0.f,0.5f);
+            rect.move(0.f,speed);
+        }
 
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            rect.move(-speed,0.f);
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-            rect.move(0.5f,0.f);
+            rect.move(speed,0.f);
         }
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-            //window.clear(sf::Color::Black);
             rect.setFillColor(sf::Color::Magenta);
-    
         }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        else
         {
-            circle.move(0.f,-0.5f);
+            rect.setFillColor(sf::Color::Green);
         }
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        {
-            circle.move(-0.5f,0.f);
-        }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        {
-            circle.move(0.f,0.5f);
-
-        }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        {
-            circle.move(0.5f,0.f);
-        }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Right))
         {
             circle.setFillColor(sf::Color::Yellow);
         }
+        else
+        {
+            circle.setFillColor(sf::Color::Red);
+        }
 
-        window.clear(sf::Color::Blue);    
-        
+        // sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+        // cout << mousePos.x << " " << mousePos.y << endl;
+
+        //sf::Vector2i rectPos = rect.getPosition(window)
+        //DON't know how to change background color by storing it in a variable
+        //Don't know how to compare the positions of 2 shapes to know when they collide
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        {   cout<<"Window collapsed!\n";
+            window.close();
+        }
+
+        window.clear(sf::Color::Blue);
+
         window.draw(rect);
         window.draw(circle);
 
-
         window.display();
-
     }
 
     return 0;
