@@ -1,16 +1,3 @@
-# SFML Learning
-
-This repository documents my journey of learning SFML and modern C++ game development.
-
-## Environment
-
-- Language: C++
-- Library: SFML 2.6.1
-- Build System: CMake
-- IDE: Visual Studio Code
-
-## Lessons Completed
-
 - [x] Lesson 1 - Window Creation & Event Handling
 - [x] Lesson 2 - Rendering Pipeline
 - [x] Lesson 3 - Shapes, Coordinates & Positioning
@@ -20,8 +7,14 @@ This repository documents my journey of learning SFML and modern C++ game develo
   - [x] Challenge 1 - Interactive Playground
 - [x] Lesson 5 - Time, FPS & Delta Time
   - [x] Lesson 5.1 - Understanding FPS
-  - [x] Lesson 5.2 - Delta Time & Frame-Independent Movement
-- [ ] Lesson 6 - Vectors & Movement Mathematics
+  - [x] Lesson 5.2 - Frame-Independent Movement
+- [x] Lesson 6 - Vectors & Movement Mathematics
+  - [x] Lesson 6.1 - Introduction to Vectors
+  - [x] Lesson 6.2 - Vector Operations
+  - [x] Lesson 6.3 - Vector Magnitude (Length)
+  - [x] Lesson 6.4 - Vector Normalization
+  - [x] Lesson 6.5 - Direction Vectors & Practical Applications
+  - [x] Challenge 2 - Smooth Player Controller
 - [ ] Lesson 7 - Sprites & Textures
 - [ ] Lesson 8 - Views (Camera)
 - [ ] Lesson 9 - Animation
@@ -30,4 +23,3 @@ This repository documents my journey of learning SFML and modern C++ game develo
 - [ ] Lesson 12 - Tile Maps
 - [ ] Lesson 13 - Game States
 - [ ] Lesson 14 - Building Console Survival in SFML
-

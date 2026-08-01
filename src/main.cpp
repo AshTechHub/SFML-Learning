@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -9,11 +10,11 @@ int main()
     window.setFramerateLimit(60);
     cout<<"Window created!\n";
 
-    sf::RectangleShape rect(sf::Vector2f(200,100));
+    sf::RectangleShape rect(sf::Vector2f(100.f,60.f));
     rect.setFillColor(sf::Color::Green);
-    rect.setPosition(300.f,250.f);
+    rect.setPosition(350.f,270.f);
 
-    sf::CircleShape circle(50.f);
+    sf::CircleShape circle(25.f);
     circle.setFillColor(sf::Color::Red);
     circle.setPosition(0.f,0.f);
 
@@ -24,49 +25,75 @@ int main()
     while(window.isOpen())
     {
         sf::Time deltaTime = clock.restart();
-        //cout<<deltaTime.asSeconds()<<endl;
+
+        float dt = deltaTime.asSeconds();
 
         sf::Event event;
 
         while(window.pollEvent(event))
         {
+            if(event.type == sf::Event::Closed)
+            {
+                cout<<"Window closed!\n";
+                window.close();
+            }
+
             if(event.type == sf::Event::MouseButtonPressed)
             {
-                if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                if(event.mouseButton.button == sf::Mouse::Right)
                 {
                     cout<<"Bang!\n";
                 }
             }
-            if(event.type == sf::Event::MouseMoved)//&& event.mouseButton.button == sf::Mouse::Left
+
+            if(event.type == sf::Event::KeyPressed)
             {
-                cout<<"Mouse: "<<event.mouseMove.x<<","<<event.mouseMove.y<<"\n";
+                if(event.key.code == sf::Keyboard::Escape)
+                {
+                    cout<<"Window closed!\n";
+                    window.close();
+                }
             }
 
-            if(event.type == sf::Event::Closed)
+            if(event.type == sf::Event::MouseMoved)
             {
-                window.close();
+                circle.setPosition(event.mouseMove.x,event.mouseMove.y);
             }
         }
 
+        sf::Vector2f movement(0.f,0.f);
+
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            rect.move(0.f,-speed*deltaTime.asSeconds());
+            movement.y--;
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
-            rect.move(0.f,speed*deltaTime.asSeconds());
+            movement.y++;
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-            rect.move(-speed*deltaTime.asSeconds(),0.f);
+            movement.x--;
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-            rect.move(speed*deltaTime.asSeconds(),0.f);
+            movement.x++;
         }
+
+        float length = sqrt((movement.x * movement.x) + (movement.y * movement.y));
+
+        if(length>0)
+        {
+            movement.x/=length;
+            movement.y/=length;
+
+            movement *= speed * dt;
+        }
+
+        rect.move(movement);
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
@@ -77,27 +104,12 @@ int main()
             rect.setFillColor(sf::Color::Green);
         }
 
-        if(sf::Mouse::isButtonPressed(sf::Mouse::Right))
-        {
-            circle.setFillColor(sf::Color::Yellow);
-        }
-        else
-        {
-            circle.setFillColor(sf::Color::Red);
-        }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-        {   cout<<"Window collapsed!\n";
-            window.close();
-        }
-
-        window.clear(sf::Color::Blue);
+        window.clear(sf::Color::White);
 
         window.draw(rect);
         window.draw(circle);
-
+        
         window.display();
     }
-
     return 0;
 }
