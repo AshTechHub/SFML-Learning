@@ -1,25 +1,35 @@
 - [x] Lesson 1 - Window Creation & Event Handling
 - [x] Lesson 2 - Rendering Pipeline
-- [x] Lesson 3 - Shapes, Coordinates & Positioning
-- [x] Lesson 4 - Keyboard & Mouse Input
-  - [x] Lesson 4.1 - Keyboard Input
+- [x] Lesson 3 - Shapes, Coordinates and Positioning
+- [x] Lesson 4.1 - Keyboard & Shape Movement
   - [x] Lesson 4.2 - Mouse Input
-  - [x] Challenge 1 - Interactive Playground
-- [x] Lesson 5 - Time, FPS & Delta Time
-  - [x] Lesson 5.1 - Understanding FPS
-  - [x] Lesson 5.2 - Frame-Independent Movement
-- [x] Lesson 6 - Vectors & Movement Mathematics
-  - [x] Lesson 6.1 - Introduction to Vectors
-  - [x] Lesson 6.2 - Vector Operations
-  - [x] Lesson 6.3 - Vector Magnitude (Length)
-  - [x] Lesson 6.4 - Vector Normalization
-  - [x] Lesson 6.5 - Direction Vectors & Practical Applications
-  - [x] Challenge 2 - Smooth Player Controller
-- [ ] Lesson 7 - Sprites & Textures
+- [x] Lesson 5 - Time & Delta Time
+  - [x] Lesson 5.2 - Frame Rate Independent Movement
+- [x] Lesson 6 - Vectors and Movement Mathematics
+  - [x] Lesson 6.2 - Vector Length
+  - [x] Lesson 6.3 - Vector Normalization
+  - [x] Lesson 6.4 - Diagonal Movement Fix
+
+- [x] Lesson 7 - Sprites & Textures
+  - [x] Lesson 7.1 - Texture vs Sprite
+  - [x] Lesson 7.2 - Texture Loading & Drawing
+  - [x] Lesson 7.3 - Scale, Origin & Rotation
+  - [x] Lesson 7.4 - Spritesheets & Animation
+  - [x] Lesson 7.5 - Animation States (Idle vs Walking)
+  - [x] Lesson 7.6 - Animation Controller
+  - [ ] Lesson 7.7 - Generic Animation System
+
 - [ ] Lesson 8 - Views (Camera)
-- [ ] Lesson 9 - Animation
-- [ ] Lesson 10 - Collision Detection
-- [ ] Lesson 11 - Audio
-- [ ] Lesson 12 - Tile Maps
-- [ ] Lesson 13 - Game States
-- [ ] Lesson 14 - Building Console Survival in SFML
+- [ ] Lesson 9 - Collision Detection
+- [ ] Lesson 10 - Tilemaps & World Building
+- [ ] Lesson 11 - Game Objects & Entity System
+- [ ] Lesson 12 - Player System
+- [ ] Lesson 13 - Enemy AI
+- [ ] Lesson 14 - Combat System
+- [ ] Lesson 15 - Inventory System
+- [ ] Lesson 16 - Resource Gathering
+- [ ] Lesson 17 - Crafting System
+- [ ] Lesson 18 - UI & HUD
+- [ ] Lesson 19 - Audio
+- [ ] Lesson 20 - Saving & Loading
+- [ ] Lesson 21 - Polish & Juice
