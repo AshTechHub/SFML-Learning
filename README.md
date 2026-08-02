@@ -17,19 +17,28 @@
   - [x] Lesson 7.4 - Spritesheets & Animation
   - [x] Lesson 7.5 - Animation States (Idle vs Walking)
   - [x] Lesson 7.6 - Animation Controller
-  - [ ] Lesson 7.7 - Generic Animation System
+  - [x] Lesson 7.7 - Reusable Animation Controller
 
-- [ ] Lesson 8 - Views (Camera)
-- [ ] Lesson 9 - Collision Detection
-- [ ] Lesson 10 - Tilemaps & World Building
-- [ ] Lesson 11 - Game Objects & Entity System
-- [ ] Lesson 12 - Player System
-- [ ] Lesson 13 - Enemy AI
-- [ ] Lesson 14 - Combat System
-- [ ] Lesson 15 - Inventory System
-- [ ] Lesson 16 - Resource Gathering
-- [ ] Lesson 17 - Crafting System
-- [ ] Lesson 18 - UI & HUD
-- [ ] Lesson 19 - Audio
-- [ ] Lesson 20 - Saving & Loading
-- [ ] Lesson 21 - Polish & Juice
+- [ ] Lesson 8 - Player State Machine
+  - [ ] Lesson 8.1 - What are States?
+  - [ ] Lesson 8.2 - Idle / Walk / Run
+  - [ ] Lesson 8.3 - Attack
+  - [ ] Lesson 8.4 - Hurt
+  - [ ] Lesson 8.5 - Death
+  - [ ] Lesson 8.6 - State Priority
+  - [ ] Lesson 8.7 - State Transitions
+
+- [ ] Lesson 9 - Views (Camera)
+- [ ] Lesson 10 - Collision Detection
+- [ ] Lesson 11 - Tilemaps & World Building
+- [ ] Lesson 12 - Game Objects & Entity System
+- [ ] Lesson 13 - Player Class
+- [ ] Lesson 14 - Enemy AI
+- [ ] Lesson 15 - Combat System
+- [ ] Lesson 16 - Inventory System
+- [ ] Lesson 17 - Resource Gathering
+- [ ] Lesson 18 - Crafting System
+- [ ] Lesson 19 - UI & HUD
+- [ ] Lesson 20 - Audio
+- [ ] Lesson 21 - Saving & Loading
+- [ ] Lesson 22 - Polish & Juice
