@@ -11,7 +11,16 @@ struct Animation
     int frameWidth;
     int frameHeight;
     float animationSpeed;
+    float movementSpeed;
     bool loop;
+};
+
+enum class PlayerState
+{
+    idle, 
+    walk,
+    run,
+    Count
 };
 
 int main()
@@ -21,7 +30,7 @@ int main()
     cout<<"Window created!\n";
 
     sf::Texture idleTexture;
-    if(!idleTexture.loadFromFile("assets/textures/Player/Idle_2.png"))
+    if(!idleTexture.loadFromFile("assets/textures/Player/Swordsman/Idle_2.png"))
     {
         cout<<"Walking Texture failed to load!\n";
     }
@@ -31,7 +40,7 @@ int main()
     }
 
     sf::Texture walkTexture;
-    if(!walkTexture.loadFromFile("assets/textures/Player/Walk.png"))
+    if(!walkTexture.loadFromFile("assets/textures/Player/Swordsman/Walk.png"))
     {
         cout<<"Idle Texture failed to load!\n";
     }
@@ -40,12 +49,23 @@ int main()
         cout<<"Idle Texture loaded successfully!\n";
     }
 
+    sf::Texture runTexture;
+    if(!runTexture.loadFromFile("assets/textures/Player/Swordsman/Run.png"))
+    {
+        cout<<"Run Texture failed to load!\n";
+    }
+    else
+    {
+        cout<<"Run Texture successfully loaded!\n";
+    }
+
     Animation idle;
     idle.texture = &idleTexture;
     idle.totalFrames = 3;
     idle.frameWidth = 128;
     idle.frameHeight = 128;
     idle.animationSpeed = 1.5f;
+    idle.movementSpeed = 0.f;
     idle.loop = true;
 
     Animation walk;
@@ -54,7 +74,17 @@ int main()
     walk.frameWidth = 128;
     walk.frameHeight = 128;
     walk.animationSpeed = 0.1f;
+    walk.movementSpeed = 200.f;
     walk.loop = true;
+
+    Animation run;
+    run.texture = &runTexture;
+    run.totalFrames = 8;
+    run.frameWidth = 128;
+    run.frameHeight = 128;
+    run.animationSpeed = 0.1f;
+    run.movementSpeed = 350.f;
+    run.loop = true;
 
     Animation *currentAnimation = &idle;
 
@@ -65,6 +95,16 @@ int main()
     int currentFrame = 0;
 
     float animationTimer = 0.f;
+
+    PlayerState currentState = PlayerState::idle;
+
+    PlayerState previousState = PlayerState::walk;
+
+    Animation *animations[(int)PlayerState::Count];
+
+    animations[(int)PlayerState::idle] = &idle;
+    animations[(int)PlayerState::walk] = &walk;
+    animations[(int)PlayerState::run] = &run;
 
     sf::Sprite playerSprite;
     playerSprite.setTexture(idleTexture);
@@ -77,12 +117,12 @@ int main()
 
     playerSprite.setScale(1.5f,1.5f);
 
-    playerSprite.setPosition(400.f,624.f);
+    playerSprite.setPosition(200.f,624.f);
 
     playerSprite.setRotation(0.f);
 
     
-    const float speed = 200.f;
+    //const float speed = 200.f;
 
     sf::Clock clock;
 
@@ -144,19 +184,39 @@ int main()
 
         float length = sqrt((movement.x * movement.x) + (movement.y * movement.y));
 
-        if(length>0)
+        if(length==0)
+        {
+            currentState = PlayerState::idle;
+        }
+        else
         {
             movement.x/=length;
             movement.y/=length;
 
-            movement *= speed * dt;
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+            {
+                currentState = PlayerState::run;
+            }
+            else
+            {
+                //movement *= speed * dt;
+                currentState = PlayerState::walk;
+            }
 
-            nextAnimation = &walk;
+            //float currentSpeed = speed;
+
+            // if(currentState == PlayerState::run)
+            // {
+            //     currentSpeed = 350.f;
+            // }
+
+            // movement *= currentSpeed * dt;
+
+            movement *= currentAnimation->movementSpeed *dt;
+
         }
-        else
-        {
-            nextAnimation = &idle;
-        }
+
+       nextAnimation = animations[(int)currentState];
 
         if(nextAnimation != currentAnimation)
         {
