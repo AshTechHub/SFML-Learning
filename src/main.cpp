@@ -296,30 +296,29 @@ int main()
             }
         }
 
+        bool canLeaveCurrentState = false;
+
         switch(currentState)
         {
             case PlayerState::idle:
-
             case PlayerState::walk:
-
             case PlayerState::run:
-
-            currentState = wantedState;
-            break;
+                canLeaveCurrentState = true;
+                break;
 
             case PlayerState::attack:
-                if(animationFinished)
-                    currentState = wantedState;
-                break;
-
             case PlayerState::hurt:
-                if(animationFinished)
-                    currentState = wantedState;
+                canLeaveCurrentState = animationFinished; 
                 break;
-
 
             case PlayerState::death:
+                canLeaveCurrentState = false;
                 break;
+        }
+
+        if(canLeaveCurrentState)
+        {
+            currentState = wantedState;
         }
 
         nextAnimation = animations[(int)currentState];
@@ -368,31 +367,6 @@ int main()
 
             animationTimer = 0;
         }
-
-        // if(animationFinished)
-        // {
-        //     if(currentAnimation == &attack || currentAnimation == &hurt)
-        //     {
-        //         if(length > 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
-        //         {
-        //             currentState = PlayerState::run;
-        //         }
-        //         else if(length > 0)
-        //         {
-        //             currentState = PlayerState::walk;
-        //         }
-        //         else
-        //         {
-        //             currentState = PlayerState::idle;
-        //         }
-        //         nextAnimation = animations[(int)currentState];
-        //     }
-        //     else if(currentAnimation == &death)
-        //     {
-        //         currentState = PlayerState::death;
-        //         nextAnimation = animations[(int)PlayerState::death];
-        //     }
-        // }
 
         movement *= currentAnimation->movementSpeed * dt;
 

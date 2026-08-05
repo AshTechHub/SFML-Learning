@@ -25,8 +25,8 @@
   - [x] Lesson 8.3 - Attack
   - [x] Lesson 8.4 - Hurt
   - [x] Lesson 8.5 - Death
-  - [ ] Lesson 8.6 - State Priority
-  - [ ] Lesson 8.7 - State Transitions
+  - [x] Lesson 8.6 - State Priority
+  - [x] Lesson 8.7 - State Transitions
 
 - [ ] Lesson 9 - Views (Camera)
 - [ ] Lesson 10 - Collision Detection
