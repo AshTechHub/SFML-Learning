@@ -23,6 +23,7 @@ enum class PlayerState
     attack,
     hurt,
     death,
+    jump,
     Count
 };
 
@@ -37,19 +38,11 @@ int main()
     {
         cout<<"Idle Texture failed to load!\n";
     }
-    else
-    {
-        cout<<"Idle Texture loaded successfully!\n";
-    }
 
     sf::Texture walkTexture;
     if(!walkTexture.loadFromFile("assets/textures/Player/Swordsman/Walk.png"))
     {
         cout<<"Walk Texture failed to load!\n";
-    }
-    else
-    {
-        cout<<"Walk Texture loaded successfully!\n";
     }
 
     sf::Texture runTexture;
@@ -57,19 +50,11 @@ int main()
     {
         cout<<"Run Texture failed to load!\n";
     }
-    else
-    {
-        cout<<"Run Texture successfully loaded!\n";
-    }
 
     sf::Texture attackTexture;
     if(!attackTexture.loadFromFile("assets/textures/Player/Swordsman/Attack_2.png"))
     {
         cout<<"Attack Texture failed to load!\n";
-    }
-    else
-    {
-        cout<<"Attack Texture successfully loaded!\n";
     }
 
     sf::Texture hurtTexture;
@@ -77,19 +62,17 @@ int main()
     {
         cout<<"Hurt Texture failed to load!\n";
     }
-    else
-    {
-        cout<<"Hurt Texture successfully loaded!\n";
-    }
 
     sf::Texture deathTexture;
     if(!deathTexture.loadFromFile("assets/textures/Player/Swordsman/Dead.png"))
     {
         cout<<"Dead Texture failed to load!\n";
     }
-    else
+
+    sf::Texture jumpTexture;
+    if(!jumpTexture.loadFromFile("assets/textures/Player/Swordsman/Jump.png"))
     {
-        cout<<"Dead Texture successfully loaded!\n";
+        cout<<"Jump Texture failed to lead!\n";
     }
 
     sf::Sprite playerSprite;
@@ -103,7 +86,7 @@ int main()
 
     playerSprite.setScale(2.f,2.f);
 
-    playerSprite.setPosition(200.f,524.f);
+    playerSprite.setPosition(200.f,590.f);
 
     playerSprite.setRotation(0.f);
 
@@ -161,6 +144,16 @@ int main()
     death.movementSpeed = 0.f;
     death.loop = false;
 
+    Animation jump;
+    jump.texture = &jumpTexture;
+    jump.totalFrames = 8;
+    jump.frameWidth = 128;
+    jump.frameHeight = 128;
+    jump.animationSpeed = 0.08f;
+    jump.movementSpeed = 350.f;
+    jump.loop = false;
+
+
     Animation *currentAnimation = &idle;
 
     Animation *nextAnimation = &idle;
@@ -183,10 +176,12 @@ int main()
     animations[(int)PlayerState::attack] = &attack;
     animations[(int)PlayerState::hurt] = &hurt;
     animations[(int)PlayerState::death] = &death;
+    animations[(int)PlayerState::jump] = &jump;
 
     bool attackPressedLastFrame = false;
     bool hurtPressedLastFrame = false;
     bool deathPressedLastFrame = false;
+    bool jumpPressedLastFrame = false;
 
 
     sf::Clock clock;
@@ -260,11 +255,10 @@ int main()
 
         bool deathPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::K);
 
-        if(currentState == PlayerState::death)
-        {
-            
-        }
-        else if((currentState == PlayerState::attack || currentState == PlayerState::hurt || currentState == PlayerState::death) && !animationFinished)
+        bool jumpPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
+
+        
+        if((currentState == PlayerState::attack || currentState == PlayerState::hurt || currentState == PlayerState::death || currentState == PlayerState::jump) && !animationFinished)
         {
 
         }
@@ -281,6 +275,10 @@ int main()
             else if(attackPressed && !attackPressedLastFrame)
             {
                 wantedState=PlayerState::attack;
+            }
+            else if(jumpPressed && !jumpPressedLastFrame)
+            {
+                wantedState=PlayerState::jump;
             }
             else if(length>0 && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
             {
@@ -308,6 +306,7 @@ int main()
 
             case PlayerState::attack:
             case PlayerState::hurt:
+            case PlayerState::jump:
                 canLeaveCurrentState = animationFinished; 
                 break;
 
@@ -385,6 +384,7 @@ int main()
         attackPressedLastFrame = attackPressed;
         hurtPressedLastFrame = hurtPressed;
         deathPressedLastFrame = deathPressed;
+        jumpPressedLastFrame = jumpPressed;
 
         window.clear(sf::Color(45,52,71));
 

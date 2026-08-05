@@ -9,7 +9,6 @@
   - [x] Lesson 6.2 - Vector Length
   - [x] Lesson 6.3 - Vector Normalization
   - [x] Lesson 6.4 - Diagonal Movement Fix
-
 - [x] Lesson 7 - Sprites & Textures
   - [x] Lesson 7.1 - Texture vs Sprite
   - [x] Lesson 7.2 - Texture Loading & Drawing
@@ -18,7 +17,6 @@
   - [x] Lesson 7.5 - Animation States (Idle vs Walking)
   - [x] Lesson 7.6 - Animation Controller
   - [x] Lesson 7.7 - Reusable Animation Controller
-
 - [x] Lesson 8 - Player State Machine
   - [x] Lesson 8.1 - What are States?
   - [x] Lesson 8.2 - Idle / Walk / Run
@@ -27,12 +25,20 @@
   - [x] Lesson 8.5 - Death
   - [x] Lesson 8.6 - State Priority
   - [x] Lesson 8.7 - State Transitions
-
+  - [x] Mini Challenge - Jump
 - [ ] Lesson 9 - Views (Camera)
+
 - [ ] Lesson 10 - Collision Detection
 - [ ] Lesson 11 - Tilemaps & World Building
 - [ ] Lesson 12 - Game Objects & Entity System
 - [ ] Lesson 13 - Player Class
+  - [ ] 13.1 Creating the Player Class
+  - [ ] 13.2 Moving Code out of main()
+  - [ ] 13.3 Player Update()
+  - [ ] 13.4 Player Draw()
+  - [ ] 13.5 Facing Left & Right
+  - [ ] 13.6 Sprite Flipping
+  - [ ] 13.7 Encapsulation & Cleanup
 - [ ] Lesson 14 - Enemy AI
 - [ ] Lesson 15 - Combat System
 - [ ] Lesson 16 - Inventory System
