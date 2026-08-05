@@ -20,6 +20,7 @@ enum class PlayerState
     idle, 
     walk,
     run,
+    attack,
     Count
 };
 
@@ -32,21 +33,21 @@ int main()
     sf::Texture idleTexture;
     if(!idleTexture.loadFromFile("assets/textures/Player/Swordsman/Idle_2.png"))
     {
-        cout<<"Walking Texture failed to load!\n";
-    }
-    else
-    {
-        cout<<"Walking Texture loaded successfully!\n";
-    }
-
-    sf::Texture walkTexture;
-    if(!walkTexture.loadFromFile("assets/textures/Player/Swordsman/Walk.png"))
-    {
         cout<<"Idle Texture failed to load!\n";
     }
     else
     {
         cout<<"Idle Texture loaded successfully!\n";
+    }
+
+    sf::Texture walkTexture;
+    if(!walkTexture.loadFromFile("assets/textures/Player/Swordsman/Walk.png"))
+    {
+        cout<<"Walk Texture failed to load!\n";
+    }
+    else
+    {
+        cout<<"Walk Texture loaded successfully!\n";
     }
 
     sf::Texture runTexture;
@@ -59,6 +60,31 @@ int main()
         cout<<"Run Texture successfully loaded!\n";
     }
 
+    sf::Texture attackTexture;
+    if(!attackTexture.loadFromFile("assets/textures/Player/Swordsman/Attack_2.png"))
+    {
+        cout<<"Attack Texture failed to load!\n";
+    }
+    else
+    {
+        cout<<"Attack Texture successfully loaded!\n";
+    }
+
+    sf::Sprite playerSprite;
+    playerSprite.setTexture(idleTexture);
+
+    playerSprite.setTextureRect(sf::IntRect(0,0,128,128));
+
+    sf::FloatRect bounds = playerSprite.getLocalBounds();
+
+    playerSprite.setOrigin(bounds.width/2.f,bounds.height/2.f);
+
+    playerSprite.setScale(2.f,2.f);
+
+    playerSprite.setPosition(200.f,524.f);
+
+    playerSprite.setRotation(0.f);
+
     Animation idle;
     idle.texture = &idleTexture;
     idle.totalFrames = 3;
@@ -66,7 +92,7 @@ int main()
     idle.frameHeight = 128;
     idle.animationSpeed = 1.5f;
     idle.movementSpeed = 0.f;
-    idle.loop = true;
+    idle.loop = false;
 
     Animation walk;
     walk.texture = &walkTexture;
@@ -82,9 +108,19 @@ int main()
     run.totalFrames = 8;
     run.frameWidth = 128;
     run.frameHeight = 128;
-    run.animationSpeed = 0.1f;
+    run.animationSpeed = 0.08f;
     run.movementSpeed = 350.f;
     run.loop = true;
+
+    Animation attack;
+    attack.texture = &attackTexture;
+    attack.totalFrames = 3;
+    attack.frameWidth = 128;
+    attack.frameHeight = 128;
+    attack.animationSpeed = 0.1f;
+    attack.movementSpeed = 0.f;
+    attack.loop = false;
+
 
     Animation *currentAnimation = &idle;
 
@@ -98,31 +134,16 @@ int main()
 
     PlayerState currentState = PlayerState::idle;
 
-    PlayerState previousState = PlayerState::walk;
+    //PlayerState previousState = PlayerState::walk;
 
     Animation *animations[(int)PlayerState::Count];
 
     animations[(int)PlayerState::idle] = &idle;
     animations[(int)PlayerState::walk] = &walk;
     animations[(int)PlayerState::run] = &run;
+    animations[(int)PlayerState::attack] = &attack;
 
-    sf::Sprite playerSprite;
-    playerSprite.setTexture(idleTexture);
-
-    playerSprite.setTextureRect(sf::IntRect(0,0,128,128));
-
-    sf::FloatRect bounds = playerSprite.getLocalBounds();
-
-    playerSprite.setOrigin(bounds.width/2.f,bounds.height/2.f);
-
-    playerSprite.setScale(1.5f,1.5f);
-
-    playerSprite.setPosition(200.f,624.f);
-
-    playerSprite.setRotation(0.f);
-
-    
-    //const float speed = 200.f;
+    bool attackPressedLastFrame = false;
 
     sf::Clock clock;
 
@@ -184,39 +205,38 @@ int main()
 
         float length = sqrt((movement.x * movement.x) + (movement.y * movement.y));
 
-        if(length==0)
+        if(length>0)
         {
-            currentState = PlayerState::idle;
+            movement/=length;
+        }
+
+        bool attackPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::J);
+
+        if(currentState == PlayerState::attack && !animationFinished)
+        {
+
         }
         else
         {
-            movement.x/=length;
-            movement.y/=length;
-
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+            if(attackPressed && !attackPressedLastFrame)
             {
-                currentState = PlayerState::run;
+                currentState=PlayerState::attack;
+            }
+            else if(length>0 && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+            {
+                currentState=PlayerState::run;
+            }
+            else if(length>0)
+            {
+                currentState=PlayerState::walk;
             }
             else
             {
-                //movement *= speed * dt;
-                currentState = PlayerState::walk;
+                currentState=PlayerState::idle;
             }
-
-            //float currentSpeed = speed;
-
-            // if(currentState == PlayerState::run)
-            // {
-            //     currentSpeed = 350.f;
-            // }
-
-            // movement *= currentSpeed * dt;
-
-            movement *= currentAnimation->movementSpeed *dt;
-
         }
 
-       nextAnimation = animations[(int)currentState];
+        nextAnimation = animations[(int)currentState];
 
         if(nextAnimation != currentAnimation)
         {
@@ -227,6 +247,8 @@ int main()
 
             animationTimer = 0;
 
+            animationFinished = false;
+
             playerSprite.setTextureRect(sf::IntRect(0,0,currentAnimation->frameWidth,currentAnimation->frameHeight));
         }
 
@@ -236,16 +258,57 @@ int main()
         {
             if(currentAnimation == &idle)
             {
-                playerSprite.setTextureRect(sf::IntRect((currentAnimation->totalFrames-1) * currentAnimation->frameWidth, 0, currentAnimation->frameWidth, currentAnimation->frameHeight));
+                //playerSprite.setTextureRect(sf::IntRect((currentAnimation->totalFrames-1) * currentAnimation->frameWidth, 0, currentAnimation->frameWidth, currentAnimation->frameHeight));
+                playerSprite.setTextureRect(sf::IntRect(0,0,128,128));
             }
             else
             {
-                currentFrame = (currentFrame + 1) % currentAnimation->totalFrames;
+                //currentFrame = (currentFrame + 1) % currentAnimation->totalFrames;
+                //playerSprite.setTextureRect(sf::IntRect(currentFrame * currentAnimation->frameWidth, 0, currentAnimation->frameWidth, currentAnimation->frameHeight));
+                                
+                currentFrame++;
+
+                if(currentFrame >= currentAnimation->totalFrames)
+                {
+                    if(currentAnimation->loop)
+                    {
+                        currentFrame = 0;
+                    }
+                    else
+                    {
+                        currentFrame = currentAnimation->totalFrames - 1;
+                        animationFinished = true;
+                    }
+                }
 
                 playerSprite.setTextureRect(sf::IntRect(currentFrame * currentAnimation->frameWidth, 0, currentAnimation->frameWidth, currentAnimation->frameHeight));
             }
+
             animationTimer = 0;
         }
+
+        if(animationFinished)
+        {
+            if(currentAnimation == &attack)
+            {
+                if(length > 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+                {
+                    currentState = PlayerState::run;
+                }
+                else if(length > 0)
+                {
+                    currentState = PlayerState::walk;
+                }
+                else
+                {
+                    currentState = PlayerState::idle;
+                }
+
+                nextAnimation = animations[(int)currentState];
+            }
+        }
+
+        movement *= currentAnimation->movementSpeed * dt;
 
         playerSprite.move(movement);
 
@@ -259,11 +322,14 @@ int main()
             playerSprite.rotate(100.f * dt);
         }
 
-        window.clear(sf::Color::Yellow);
+        attackPressedLastFrame = attackPressed;
+
+        window.clear(sf::Color(45,52,71));
 
         window.draw(playerSprite);
         
         window.display();
     }
+
     return 0;
 }

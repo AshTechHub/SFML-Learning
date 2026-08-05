@@ -22,8 +22,7 @@
 - [ ] Lesson 8 - Player State Machine
   - [x] Lesson 8.1 - What are States?
   - [x] Lesson 8.2 - Idle / Walk / Run
-  - [ ] Lesson 8.3 - Jump
-  - [ ] Lesson 8.3 - Attack
+  - [x] Lesson 8.3 - Attack
   - [ ] Lesson 8.4 - Hurt
   - [ ] Lesson 8.5 - Death
   - [ ] Lesson 8.6 - State Priority
