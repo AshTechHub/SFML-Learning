@@ -19,7 +19,7 @@
   - [x] Lesson 7.6 - Animation Controller
   - [x] Lesson 7.7 - Reusable Animation Controller
 
-- [ ] Lesson 8 - Player State Machine
+- [x] Lesson 8 - Player State Machine
   - [x] Lesson 8.1 - What are States?
   - [x] Lesson 8.2 - Idle / Walk / Run
   - [x] Lesson 8.3 - Attack
