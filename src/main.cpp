@@ -22,6 +22,7 @@ enum class PlayerState
     run,
     attack,
     hurt,
+    death,
     Count
 };
 
@@ -79,6 +80,16 @@ int main()
     else
     {
         cout<<"Hurt Texture successfully loaded!\n";
+    }
+
+    sf::Texture deathTexture;
+    if(!deathTexture.loadFromFile("assets/textures/Player/Swordsman/Dead.png"))
+    {
+        cout<<"Dead Texture failed to load!\n";
+    }
+    else
+    {
+        cout<<"Dead Texture successfully loaded!\n";
     }
 
     sf::Sprite playerSprite;
@@ -141,6 +152,15 @@ int main()
     hurt.movementSpeed = 0.f;
     hurt.loop = false;
 
+    Animation death;
+    death.texture = &deathTexture;
+    death.totalFrames = 3;
+    death.frameWidth = 128;
+    death.frameHeight = 128;
+    death.animationSpeed = 0.3f;
+    death.movementSpeed = 0.f;
+    death.loop = false;
+
     Animation *currentAnimation = &idle;
 
     Animation *nextAnimation = &idle;
@@ -162,9 +182,12 @@ int main()
     animations[(int)PlayerState::run] = &run;
     animations[(int)PlayerState::attack] = &attack;
     animations[(int)PlayerState::hurt] = &hurt;
+    animations[(int)PlayerState::death] = &death;
 
     bool attackPressedLastFrame = false;
     bool hurtPressedLastFrame = false;
+    bool deathPressedLastFrame = false;
+
 
     sf::Clock clock;
 
@@ -235,13 +258,23 @@ int main()
 
         bool hurtPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::H);
 
-        if((currentState == PlayerState::attack || currentState == PlayerState::hurt) && !animationFinished)
+        bool deathPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::K);
+
+        if(currentState == PlayerState::death)
+        {
+            
+        }
+        else if((currentState == PlayerState::attack || currentState == PlayerState::hurt || currentState == PlayerState::death) && !animationFinished)
         {
 
         }
         else
         {
-            if(hurtPressed && !hurtPressedLastFrame)
+            if(deathPressed && !deathPressedLastFrame)
+            {
+                currentState = PlayerState::death;
+            }
+            else if(hurtPressed && !hurtPressedLastFrame)
             {
                 currentState = PlayerState::hurt;
             }
@@ -333,6 +366,11 @@ int main()
 
                 nextAnimation = animations[(int)currentState];
             }
+            else if(currentAnimation == &death)
+            {
+                currentState = PlayerState::death;
+                nextAnimation = animations[(int)PlayerState::death];
+            }
         }
 
         movement *= currentAnimation->movementSpeed * dt;
@@ -351,6 +389,7 @@ int main()
 
         attackPressedLastFrame = attackPressed;
         hurtPressedLastFrame = hurtPressed;
+        deathPressedLastFrame = deathPressed;
 
         window.clear(sf::Color(45,52,71));
 

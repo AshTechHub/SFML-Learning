@@ -23,8 +23,8 @@
   - [x] Lesson 8.1 - What are States?
   - [x] Lesson 8.2 - Idle / Walk / Run
   - [x] Lesson 8.3 - Attack
-  - [ ] Lesson 8.4 - Hurt
-  - [ ] Lesson 8.5 - Death
+  - [x] Lesson 8.4 - Hurt
+  - [x] Lesson 8.5 - Death
   - [ ] Lesson 8.6 - State Priority
   - [ ] Lesson 8.7 - State Transitions
 
