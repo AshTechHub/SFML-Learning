@@ -21,6 +21,7 @@ enum class PlayerState
     walk,
     run,
     attack,
+    hurt,
     Count
 };
 
@@ -68,6 +69,16 @@ int main()
     else
     {
         cout<<"Attack Texture successfully loaded!\n";
+    }
+
+    sf::Texture hurtTexture;
+    if(!hurtTexture.loadFromFile("assets/textures/Player/Swordsman/Hurt.png"))
+    {
+        cout<<"Hurt Texture failed to load!\n";
+    }
+    else
+    {
+        cout<<"Hurt Texture successfully loaded!\n";
     }
 
     sf::Sprite playerSprite;
@@ -121,6 +132,14 @@ int main()
     attack.movementSpeed = 0.f;
     attack.loop = false;
 
+    Animation hurt;
+    hurt.texture = &hurtTexture;
+    hurt.totalFrames = 3;
+    hurt.frameWidth = 128;
+    hurt.frameHeight = 128;
+    hurt.animationSpeed = 0.15f;
+    hurt.movementSpeed = 0.f;
+    hurt.loop = false;
 
     Animation *currentAnimation = &idle;
 
@@ -142,8 +161,10 @@ int main()
     animations[(int)PlayerState::walk] = &walk;
     animations[(int)PlayerState::run] = &run;
     animations[(int)PlayerState::attack] = &attack;
+    animations[(int)PlayerState::hurt] = &hurt;
 
     bool attackPressedLastFrame = false;
+    bool hurtPressedLastFrame = false;
 
     sf::Clock clock;
 
@@ -212,13 +233,19 @@ int main()
 
         bool attackPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::J);
 
-        if(currentState == PlayerState::attack && !animationFinished)
+        bool hurtPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::H);
+
+        if((currentState == PlayerState::attack || currentState == PlayerState::hurt) && !animationFinished)
         {
 
         }
         else
         {
-            if(attackPressed && !attackPressedLastFrame)
+            if(hurtPressed && !hurtPressedLastFrame)
+            {
+                currentState = PlayerState::hurt;
+            }
+            else if(attackPressed && !attackPressedLastFrame)
             {
                 currentState=PlayerState::attack;
             }
@@ -289,7 +316,7 @@ int main()
 
         if(animationFinished)
         {
-            if(currentAnimation == &attack)
+            if(currentAnimation == &attack || currentAnimation == &hurt)
             {
                 if(length > 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
                 {
@@ -323,6 +350,7 @@ int main()
         }
 
         attackPressedLastFrame = attackPressed;
+        hurtPressedLastFrame = hurtPressed;
 
         window.clear(sf::Color(45,52,71));
 
