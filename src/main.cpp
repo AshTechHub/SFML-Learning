@@ -173,7 +173,7 @@ int main()
 
     PlayerState currentState = PlayerState::idle;
 
-    //PlayerState previousState = PlayerState::walk;
+    PlayerState wantedState = PlayerState::idle;
 
     Animation *animations[(int)PlayerState::Count];
 
@@ -272,28 +272,54 @@ int main()
         {
             if(deathPressed && !deathPressedLastFrame)
             {
-                currentState = PlayerState::death;
+                wantedState = PlayerState::death;
             }
             else if(hurtPressed && !hurtPressedLastFrame)
             {
-                currentState = PlayerState::hurt;
+                wantedState = PlayerState::hurt;
             }
             else if(attackPressed && !attackPressedLastFrame)
             {
-                currentState=PlayerState::attack;
+                wantedState=PlayerState::attack;
             }
             else if(length>0 && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
             {
-                currentState=PlayerState::run;
+                wantedState=PlayerState::run;
             }
             else if(length>0)
             {
-                currentState=PlayerState::walk;
+                wantedState=PlayerState::walk;
             }
             else
             {
-                currentState=PlayerState::idle;
+                wantedState=PlayerState::idle;
             }
+        }
+
+        switch(currentState)
+        {
+            case PlayerState::idle:
+
+            case PlayerState::walk:
+
+            case PlayerState::run:
+
+            currentState = wantedState;
+            break;
+
+            case PlayerState::attack:
+                if(animationFinished)
+                    currentState = wantedState;
+                break;
+
+            case PlayerState::hurt:
+                if(animationFinished)
+                    currentState = wantedState;
+                break;
+
+
+            case PlayerState::death:
+                break;
         }
 
         nextAnimation = animations[(int)currentState];
@@ -318,14 +344,10 @@ int main()
         {
             if(currentAnimation == &idle)
             {
-                //playerSprite.setTextureRect(sf::IntRect((currentAnimation->totalFrames-1) * currentAnimation->frameWidth, 0, currentAnimation->frameWidth, currentAnimation->frameHeight));
                 playerSprite.setTextureRect(sf::IntRect(0,0,128,128));
             }
             else
-            {
-                //currentFrame = (currentFrame + 1) % currentAnimation->totalFrames;
-                //playerSprite.setTextureRect(sf::IntRect(currentFrame * currentAnimation->frameWidth, 0, currentAnimation->frameWidth, currentAnimation->frameHeight));
-                                
+            {         
                 currentFrame++;
 
                 if(currentFrame >= currentAnimation->totalFrames)
@@ -347,31 +369,30 @@ int main()
             animationTimer = 0;
         }
 
-        if(animationFinished)
-        {
-            if(currentAnimation == &attack || currentAnimation == &hurt)
-            {
-                if(length > 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
-                {
-                    currentState = PlayerState::run;
-                }
-                else if(length > 0)
-                {
-                    currentState = PlayerState::walk;
-                }
-                else
-                {
-                    currentState = PlayerState::idle;
-                }
-
-                nextAnimation = animations[(int)currentState];
-            }
-            else if(currentAnimation == &death)
-            {
-                currentState = PlayerState::death;
-                nextAnimation = animations[(int)PlayerState::death];
-            }
-        }
+        // if(animationFinished)
+        // {
+        //     if(currentAnimation == &attack || currentAnimation == &hurt)
+        //     {
+        //         if(length > 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+        //         {
+        //             currentState = PlayerState::run;
+        //         }
+        //         else if(length > 0)
+        //         {
+        //             currentState = PlayerState::walk;
+        //         }
+        //         else
+        //         {
+        //             currentState = PlayerState::idle;
+        //         }
+        //         nextAnimation = animations[(int)currentState];
+        //     }
+        //     else if(currentAnimation == &death)
+        //     {
+        //         currentState = PlayerState::death;
+        //         nextAnimation = animations[(int)PlayerState::death];
+        //     }
+        // }
 
         movement *= currentAnimation->movementSpeed * dt;
 
