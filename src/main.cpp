@@ -39,17 +39,22 @@ int main()
     sf::View camera;
     camera.setSize(1280.f,720.f);
     camera.setCenter(640.f,360.f);
-
     sf::Vector2f cameraPosition = camera.getCenter();
     sf::Vector2f cameraTarget;
-
-     float currentZoom = 1.f;
-    const float minZoom = 0.7f;
-    const float maxZoom = 2.0f;
-
     const sf::Vector2f baseCameraSize(1280.f, 720.f);
-
     window.setView(camera);
+
+    sf::View uiView;
+    uiView.setSize(1280.f,720.f);
+    uiView.setCenter(640.f,360.f);
+
+    sf::RectangleShape healthBar(sf::Vector2f(250.f,30.f));
+    healthBar.setFillColor(sf::Color::Red);
+    healthBar.setPosition(20.f,20.f);
+
+    sf::RectangleShape energyBar(sf::Vector2f(250.f,30.f));
+    energyBar.setFillColor(sf::Color::Blue);
+    energyBar.setPosition(20.f,60.f);
 
     sf::Texture idleTexture;
     if(!idleTexture.loadFromFile("assets/textures/Player/Swordsman/Idle.png"))
@@ -213,6 +218,9 @@ int main()
     box3.setFillColor(sf::Color::Magenta);
     box3.setPosition(600.f,500.f);
 
+    float currentZoom = 1.f;
+    const float minZoom = 0.7f;
+    const float maxZoom = 2.0f;
 
     sf::Clock clock;
 
@@ -463,10 +471,16 @@ int main()
 
         window.clear(sf::Color(45,52,71));
 
+        window.setView(camera);
+
         window.draw(playerSprite);
         window.draw(box);
         window.draw(box2);
         window.draw(box3);
+
+        window.setView(uiView);
+        window.draw(healthBar);
+        window.draw(energyBar);
 
         window.display();
     }
