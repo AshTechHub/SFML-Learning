@@ -39,9 +39,11 @@ int main()
     sf::View camera;
     camera.setSize(1280.f,720.f);
     camera.setCenter(640.f,360.f);
-    window.setView(camera);
 
     sf::Vector2f cameraPosition = camera.getCenter();
+    sf::Vector2f cameraTarget;
+
+    window.setView(camera);
 
     sf::Texture idleTexture;
     if(!idleTexture.loadFromFile("assets/textures/Player/Swordsman/Idle.png"))
@@ -387,30 +389,32 @@ int main()
 
         playerSprite.move(movement);
 
-        //camera.setCenter(playerSprite.getPosition());
+        cameraTarget = playerSprite.getPosition();
 
-        float cameraX = playerSprite.getPosition().x;
-        float cameraY = playerSprite.getPosition().y;
-
-        if(cameraX < camera.getSize().x/2.f)
+        if(cameraTarget.x < camera.getSize().x/2.f)
         {
-            cameraX = camera.getSize().x/2.f;
+            cameraTarget.x = camera.getSize().x/2.f;
         }
-        if(cameraX > WORLD_WIDTH - camera.getSize().x/2.f)
+        if(cameraTarget.x > WORLD_WIDTH - camera.getSize().x/2.f)
         {
-            cameraX = WORLD_WIDTH - camera.getSize().x/2.f;
+            cameraTarget.x = WORLD_WIDTH - camera.getSize().x/2.f;
         }
-        if(cameraY < camera.getSize().y/2.f)
+        if(cameraTarget.y < camera.getSize().y/2.f)
         {
-            cameraY = camera.getSize().y/2.f;
+            cameraTarget.y = camera.getSize().y/2.f;
         }
-        if(cameraY > WORLD_WIDTH - camera.getSize().y/2.f)
+        if(cameraTarget.y > WORLD_HEIGHT - camera.getSize().y/2.f)
         {
-            cameraY = WORLD_WIDTH - camera.getSize().y/2.f;
+            cameraTarget.y = WORLD_HEIGHT - camera.getSize().y/2.f;
         }
 
-        camera.setCenter(cameraX,cameraY);
+        sf::Vector2f targetPosition(cameraTarget.x,cameraTarget.y);
 
+        float smoothSpeed = 6.f;
+
+        cameraPosition += (targetPosition - cameraPosition) * smoothSpeed * dt;
+
+        camera.setCenter(cameraPosition);
 
         window.setView(camera);
 
