@@ -77,7 +77,7 @@
 - [x] 9.3 Following the Player
 - [x] 9.4 Camera Boundaries
 - [x] 9.5 Smooth Camera Movement
-- [ ] 9.6 Zoom
+- [X] 9.6 Zoom
 - [ ] 9.7 Multiple Views (UI & Game View)
 
 ---

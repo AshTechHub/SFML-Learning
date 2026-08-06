@@ -43,6 +43,12 @@ int main()
     sf::Vector2f cameraPosition = camera.getCenter();
     sf::Vector2f cameraTarget;
 
+     float currentZoom = 1.f;
+    const float minZoom = 0.7f;
+    const float maxZoom = 2.0f;
+
+    const sf::Vector2f baseCameraSize(1280.f, 720.f);
+
     window.setView(camera);
 
     sf::Texture idleTexture;
@@ -243,6 +249,28 @@ int main()
                 }
             }
         }
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+        {
+            currentZoom *= 0.99f;
+        }
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+        {
+            currentZoom *= 1.01f;
+        }
+
+        if(currentZoom < minZoom)
+        {
+            currentZoom = minZoom;
+        }
+
+        if(currentZoom > maxZoom)
+        {
+            currentZoom = maxZoom;
+        }
+
+        camera.setSize(baseCameraSize.x * currentZoom, baseCameraSize.y * currentZoom);
 
         sf::Vector2f movement(0.f,0.f);
 
