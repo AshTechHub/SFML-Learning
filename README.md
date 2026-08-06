@@ -1,14 +1,20 @@
 - [x] Lesson 1 - Window Creation & Event Handling
+
 - [x] Lesson 2 - Rendering Pipeline
+
 - [x] Lesson 3 - Shapes, Coordinates and Positioning
+
 - [x] Lesson 4.1 - Keyboard & Shape Movement
   - [x] Lesson 4.2 - Mouse Input
+
 - [x] Lesson 5 - Time & Delta Time
   - [x] Lesson 5.2 - Frame Rate Independent Movement
+
 - [x] Lesson 6 - Vectors and Movement Mathematics
   - [x] Lesson 6.2 - Vector Length
   - [x] Lesson 6.3 - Vector Normalization
   - [x] Lesson 6.4 - Diagonal Movement Fix
+
 - [x] Lesson 7 - Sprites & Textures
   - [x] Lesson 7.1 - Texture vs Sprite
   - [x] Lesson 7.2 - Texture Loading & Drawing
@@ -17,6 +23,7 @@
   - [x] Lesson 7.5 - Animation States (Idle vs Walking)
   - [x] Lesson 7.6 - Animation Controller
   - [x] Lesson 7.7 - Reusable Animation Controller
+
 - [x] Lesson 8 - Player State Machine
   - [x] Lesson 8.1 - What are States?
   - [x] Lesson 8.2 - Idle / Walk / Run
@@ -26,7 +33,15 @@
   - [x] Lesson 8.6 - State Priority
   - [x] Lesson 8.7 - State Transitions
   - [x] Mini Challenge - Jump
+
 - [ ] Lesson 9 - Views (Camera)
+  - [ ] 9.1 What is a View?
+  - [ ] 9.2 Creating a Camera
+  - [ ] 9.3 Following the Player
+  - [ ] 9.4 Camera Boundaries
+  - [ ] 9.5 Smooth Camera Movement
+  - [ ] 9.6 Zoom
+  - [ ] 9.7 Multiple Views (Mini-map & UI)
 
 - [ ] Lesson 10 - Collision Detection
 - [ ] Lesson 11 - Tilemaps & World Building

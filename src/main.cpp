@@ -33,6 +33,11 @@ int main()
     window.setFramerateLimit(60);
     cout<<"Window created!\n";
 
+    sf::View camera;
+    camera.setSize(1280.f,720.f);
+    camera.setCenter(640.f,360.f);
+    window.setView(camera);
+
     sf::Texture idleTexture;
     if(!idleTexture.loadFromFile("assets/textures/Player/Swordsman/Idle_2.png"))
     {
