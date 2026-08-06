@@ -35,10 +35,10 @@
   - [x] Mini Challenge - Jump
 
 - [ ] Lesson 9 - Views (Camera)
-  - [ ] 9.1 What is a View?
-  - [ ] 9.2 Creating a Camera
-  - [ ] 9.3 Following the Player
-  - [ ] 9.4 Camera Boundaries
+  - [x] 9.1 What is a View?
+  - [x] 9.2 Creating a Camera
+  - [x] 9.3 Following the Player
+  - [x] 9.4 Camera Boundaries
   - [ ] 9.5 Smooth Camera Movement
   - [ ] 9.6 Zoom
   - [ ] 9.7 Multiple Views (Mini-map & UI)

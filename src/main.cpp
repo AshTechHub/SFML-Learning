@@ -27,6 +27,9 @@ enum class PlayerState
     Count
 };
 
+const float WORLD_WIDTH = 4000.f;
+const float WORLD_HEIGHT = 2000.f;
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1280,720),"SFML Tutorial - Survival Game");
@@ -38,8 +41,10 @@ int main()
     camera.setCenter(640.f,360.f);
     window.setView(camera);
 
+    sf::Vector2f cameraPosition = camera.getCenter();
+
     sf::Texture idleTexture;
-    if(!idleTexture.loadFromFile("assets/textures/Player/Swordsman/Idle_2.png"))
+    if(!idleTexture.loadFromFile("assets/textures/Player/Swordsman/Idle.png"))
     {
         cout<<"Idle Texture failed to load!\n";
     }
@@ -91,18 +96,18 @@ int main()
 
     playerSprite.setScale(2.f,2.f);
 
-    playerSprite.setPosition(200.f,590.f);
+    playerSprite.setPosition(620.f,375.f);
 
     playerSprite.setRotation(0.f);
 
     Animation idle;
     idle.texture = &idleTexture;
-    idle.totalFrames = 3;
+    idle.totalFrames = 8;
     idle.frameWidth = 128;
     idle.frameHeight = 128;
-    idle.animationSpeed = 1.5f;
+    idle.animationSpeed = 0.2f;
     idle.movementSpeed = 0.f;
-    idle.loop = false;
+    idle.loop = true;
 
     Animation walk;
     walk.texture = &walkTexture;
@@ -127,7 +132,7 @@ int main()
     attack.totalFrames = 3;
     attack.frameWidth = 128;
     attack.frameHeight = 128;
-    attack.animationSpeed = 0.1f;
+    attack.animationSpeed = 0.13f;
     attack.movementSpeed = 0.f;
     attack.loop = false;
 
@@ -136,7 +141,7 @@ int main()
     hurt.totalFrames = 3;
     hurt.frameWidth = 128;
     hurt.frameHeight = 128;
-    hurt.animationSpeed = 0.15f;
+    hurt.animationSpeed = 0.13f;
     hurt.movementSpeed = 0.f;
     hurt.loop = false;
 
@@ -187,6 +192,18 @@ int main()
     bool hurtPressedLastFrame = false;
     bool deathPressedLastFrame = false;
     bool jumpPressedLastFrame = false;
+
+    sf::RectangleShape box(sf::Vector2f(100.f,100.f));
+    box.setFillColor(sf::Color::Red);
+    box.setPosition(1200.f,500.f);
+
+    sf::RectangleShape box2(sf::Vector2f(100.f,100.f));
+    box2.setFillColor(sf::Color::Green);
+    box2.setPosition(-60.f,500.f);
+
+    sf::RectangleShape box3(sf::Vector2f(50.f,5.f));
+    box3.setFillColor(sf::Color::Magenta);
+    box3.setPosition(600.f,500.f);
 
 
     sf::Clock clock;
@@ -345,29 +362,23 @@ int main()
 
         if(animationTimer > currentAnimation->animationSpeed)
         {
-            if(currentAnimation == &idle)
+                     
+            currentFrame++;
+
+            if(currentFrame >= currentAnimation->totalFrames)
             {
-                playerSprite.setTextureRect(sf::IntRect(0,0,128,128));
-            }
-            else
-            {         
-                currentFrame++;
-
-                if(currentFrame >= currentAnimation->totalFrames)
+                if(currentAnimation->loop)
                 {
-                    if(currentAnimation->loop)
-                    {
-                        currentFrame = 0;
-                    }
-                    else
-                    {
-                        currentFrame = currentAnimation->totalFrames - 1;
-                        animationFinished = true;
-                    }
+                    currentFrame = 0;
                 }
-
-                playerSprite.setTextureRect(sf::IntRect(currentFrame * currentAnimation->frameWidth, 0, currentAnimation->frameWidth, currentAnimation->frameHeight));
+                else
+                {
+                    currentFrame = currentAnimation->totalFrames - 1;
+                    animationFinished = true;
+                }
             }
+
+            playerSprite.setTextureRect(sf::IntRect(currentFrame * currentAnimation->frameWidth, 0, currentAnimation->frameWidth, currentAnimation->frameHeight));
 
             animationTimer = 0;
         }
@@ -375,6 +386,33 @@ int main()
         movement *= currentAnimation->movementSpeed * dt;
 
         playerSprite.move(movement);
+
+        //camera.setCenter(playerSprite.getPosition());
+
+        float cameraX = playerSprite.getPosition().x;
+        float cameraY = playerSprite.getPosition().y;
+
+        if(cameraX < camera.getSize().x/2.f)
+        {
+            cameraX = camera.getSize().x/2.f;
+        }
+        if(cameraX > WORLD_WIDTH - camera.getSize().x/2.f)
+        {
+            cameraX = WORLD_WIDTH - camera.getSize().x/2.f;
+        }
+        if(cameraY < camera.getSize().y/2.f)
+        {
+            cameraY = camera.getSize().y/2.f;
+        }
+        if(cameraY > WORLD_WIDTH - camera.getSize().y/2.f)
+        {
+            cameraY = WORLD_WIDTH - camera.getSize().y/2.f;
+        }
+
+        camera.setCenter(cameraX,cameraY);
+
+
+        window.setView(camera);
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
         {
@@ -394,7 +432,10 @@ int main()
         window.clear(sf::Color(45,52,71));
 
         window.draw(playerSprite);
-        
+        window.draw(box);
+        window.draw(box2);
+        window.draw(box3);
+
         window.display();
     }
 
