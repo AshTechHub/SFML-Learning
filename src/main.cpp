@@ -224,6 +224,11 @@ int main()
 
     bool facingRight = true;
 
+    float currentLookAhead = 0.f;
+
+    const float lookAheadDistance = 200.f;
+    const float lookAheadSpeed = 2.f;
+
     sf::Clock clock;
 
     while(window.isOpen())
@@ -445,18 +450,22 @@ int main()
 
         playerSprite.move(movement);
 
-        cameraTarget = playerSprite.getPosition();
-
-        const float lookAhead = 200.f;
+        float desiredLookAhead = 0.f;
 
         if(facingRight)
         {
-            cameraTarget.x += lookAhead;
+            desiredLookAhead = lookAheadDistance;
         }
         else
         {
-            cameraTarget.x -= lookAhead;
+            desiredLookAhead = -lookAheadDistance;
         }
+
+        currentLookAhead += (desiredLookAhead - currentLookAhead) * lookAheadSpeed *dt;
+
+        cameraTarget = playerSprite.getPosition();
+        cameraTarget.x += currentLookAhead;
+
 
         if(cameraTarget.x < camera.getSize().x/2.f)
         {
