@@ -304,11 +304,11 @@ int main()
             movement.x++;
         }
 
-        if(movement.x>0)
+        if(movement.x > 0)
         {
             facingRight = true;
         }
-        else if(movement.x<0)
+        else if(movement.x < 0)
         {
             facingRight = false;
         }
@@ -446,6 +446,17 @@ int main()
         playerSprite.move(movement);
 
         cameraTarget = playerSprite.getPosition();
+
+        const float lookAhead = 200.f;
+
+        if(facingRight)
+        {
+            cameraTarget.x += lookAhead;
+        }
+        else
+        {
+            cameraTarget.x -= lookAhead;
+        }
 
         if(cameraTarget.x < camera.getSize().x/2.f)
         {

@@ -85,7 +85,7 @@
 
 - [x] 10.1 Facing Left & Right
 - [x] 10.2 Sprite Flipping
-- [ ] 10.3 Camera Look-Ahead
+- [x] 10.3 Camera Look-Ahead
 - [ ] 10.4 Smooth Look-Ahead
 - [ ] 10.5 Mouse Facing (Preparation for Combat)
 - [ ] 10.6 Directional Attack
