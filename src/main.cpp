@@ -212,7 +212,7 @@ int main()
 
     sf::RectangleShape box2(sf::Vector2f(100.f,100.f));
     box2.setFillColor(sf::Color::Green);
-    box2.setPosition(-60.f,500.f);
+    box2.setPosition(1800.f,500.f);
 
     sf::RectangleShape box3(sf::Vector2f(50.f,5.f));
     box3.setFillColor(sf::Color::Magenta);
@@ -449,6 +449,21 @@ int main()
         movement *= currentAnimation->movementSpeed * dt;
 
         playerSprite.move(movement);
+
+        sf::Vector2i mousePixel = sf::Mouse::getPosition(window);
+
+        sf::Vector2f mouseWorld = window.mapPixelToCoords(mousePixel,camera);
+
+        float playerX = playerSprite.getPosition().x;
+
+        if(mouseWorld.x > playerX)
+        {
+            facingRight = true;
+        }
+        else if(mouseWorld.x < playerX)
+        {
+            facingRight = false;
+        }
 
         float desiredLookAhead = 0.f;
 
