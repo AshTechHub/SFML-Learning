@@ -81,15 +81,13 @@
 
 ---
 
-# 🧭 Lesson 10 - Facing Direction & Camera Look-Ahead
+## ✅ Lesson 10 - Facing Direction & Camera Look-Ahead
 
 - [x] 10.1 Facing Left & Right
-- [x] 10.2 Sprite Flipping
+- [x] 10.2 Sprite/Motion Flipping
 - [x] 10.3 Camera Look-Ahead
 - [x] 10.4 Smooth Look-Ahead
 - [x] 10.5 Mouse Facing (Preparation for Combat)
-- [ ] 10.6 Directional Attack
-- [ ] 10.7 Directional Hurt & Death
 
 ---
 
