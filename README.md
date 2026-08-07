@@ -70,8 +70,7 @@
 
 ---
 
-# 🎥 Lesson 9 - Camera (Views)
-
+## ✅ Lesson 9 - Camera (Views)
 - [x] 9.1 What is a View?
 - [x] 9.2 Creating a Camera
 - [x] 9.3 Following the Player
@@ -84,8 +83,8 @@
 
 # 🧭 Lesson 10 - Facing Direction & Camera Look-Ahead
 
-- [ ] 10.1 Facing Left & Right
-- [ ] 10.2 Sprite Flipping
+- [x] 10.1 Facing Left & Right
+- [x] 10.2 Sprite Flipping
 - [ ] 10.3 Camera Look-Ahead
 - [ ] 10.4 Smooth Look-Ahead
 - [ ] 10.5 Mouse Facing (Preparation for Combat)

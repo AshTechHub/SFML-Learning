@@ -222,6 +222,8 @@ int main()
     const float minZoom = 0.7f;
     const float maxZoom = 2.0f;
 
+    bool facingRight = true;
+
     sf::Clock clock;
 
     while(window.isOpen())
@@ -300,6 +302,24 @@ int main()
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
             movement.x++;
+        }
+
+        if(movement.x>0)
+        {
+            facingRight = true;
+        }
+        else if(movement.x<0)
+        {
+            facingRight = false;
+        }
+
+        if(facingRight)
+        {
+            playerSprite.setScale(2.f,2.f);
+        }
+        else
+        {
+            playerSprite.setScale(-2.f,2.f);
         }
 
         float length = sqrt((movement.x * movement.x) + (movement.y * movement.y));
