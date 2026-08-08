@@ -103,12 +103,12 @@ int main()
 
     playerSprite.setTextureRect(sf::IntRect(0,0,128,128));
 
-    sf::FloatRect bounds = playerSprite.getLocalBounds();
+    sf::FloatRect playerBounds = playerSprite.getLocalBounds();
 
-    float halfWidth = bounds.width/2.f;
-    float halfHeight = bounds.height/2.f;
+    float halfWidth = playerBounds.width/2.f;
+    float halfHeight = playerBounds.height/2.f;
 
-    playerSprite.setOrigin(bounds.width/2.f,bounds.height/2.f);
+    playerSprite.setOrigin(playerBounds.width/2.f,playerBounds.height/2.f);
 
     playerSprite.setScale(2.f,2.f);
 
@@ -224,6 +224,11 @@ int main()
     sf::RectangleShape box4(sf::Vector2f(100.f,100.f));
     box4.setFillColor(sf::Color::Cyan);
     box4.setPosition(3200.f,500.f);
+
+    sf::RectangleShape wall;
+    wall.setSize(sf::Vector2f(200.f,300.f));
+    wall.setFillColor(sf::Color::Red);
+    wall.setPosition(1600.f,300.f);
 
     float currentZoom = 1.f;
     const float minZoom = 0.7f;
@@ -478,6 +483,15 @@ int main()
 
         playerSprite.setPosition(playerPosition);
 
+        sf::FloatRect currentPlayerBounds = playerSprite.getGlobalBounds();
+        sf::FloatRect currentWallBounds = wall.getGlobalBounds();
+
+        if(currentPlayerBounds.intersects(currentWallBounds))
+        {
+            cout<<"COLLISION!\n";
+            playerSprite.move(-movement);
+        }
+
         sf::Vector2i mousePixel = sf::Mouse::getPosition(window);
 
         sf::Vector2f mouseWorld = window.mapPixelToCoords(mousePixel,camera);
@@ -561,6 +575,7 @@ int main()
         window.draw(box2);
         window.draw(box3);
         window.draw(box4);
+        window.draw(wall);
 
         window.setView(uiView);
         window.draw(healthBar);
