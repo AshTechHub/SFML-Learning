@@ -105,6 +105,9 @@ int main()
 
     sf::FloatRect bounds = playerSprite.getLocalBounds();
 
+    float halfWidth = bounds.width/2.f;
+    float halfHeight = bounds.height/2.f;
+
     playerSprite.setOrigin(bounds.width/2.f,bounds.height/2.f);
 
     playerSprite.setScale(2.f,2.f);
@@ -212,11 +215,15 @@ int main()
 
     sf::RectangleShape box2(sf::Vector2f(100.f,100.f));
     box2.setFillColor(sf::Color::Green);
-    box2.setPosition(1800.f,500.f);
+    box2.setPosition(2400.f,700.f);
 
     sf::RectangleShape box3(sf::Vector2f(50.f,5.f));
     box3.setFillColor(sf::Color::Magenta);
     box3.setPosition(600.f,500.f);
+
+    sf::RectangleShape box4(sf::Vector2f(100.f,100.f));
+    box4.setFillColor(sf::Color::Cyan);
+    box4.setPosition(3200.f,500.f);
 
     float currentZoom = 1.f;
     const float minZoom = 0.7f;
@@ -450,6 +457,27 @@ int main()
 
         playerSprite.move(movement);
 
+        sf::Vector2f playerPosition = playerSprite.getPosition();
+
+        if(playerPosition.x < halfWidth)
+        {
+            playerPosition.x = halfWidth;
+        }
+        if(playerPosition.x > WORLD_WIDTH - halfWidth)
+        {
+            playerPosition.x = WORLD_WIDTH - halfWidth;
+        }
+        if(playerPosition.y < halfHeight)
+        {
+            playerPosition.y = halfHeight;
+        }
+        if(playerPosition.y > WORLD_HEIGHT - halfHeight)
+        {
+            playerPosition.y = WORLD_HEIGHT - halfHeight;
+        }
+
+        playerSprite.setPosition(playerPosition);
+
         sf::Vector2i mousePixel = sf::Mouse::getPosition(window);
 
         sf::Vector2f mouseWorld = window.mapPixelToCoords(mousePixel,camera);
@@ -532,6 +560,7 @@ int main()
         window.draw(box);
         window.draw(box2);
         window.draw(box3);
+        window.draw(box4);
 
         window.setView(uiView);
         window.draw(healthBar);

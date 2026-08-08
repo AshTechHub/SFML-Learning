@@ -93,7 +93,7 @@
 
 # 🧱 Lesson 11 - Collision Detection
 
-- [ ] 11.1 World Bounds
+- [x] 11.1 World Bounds
 - [ ] 11.2 Rectangle Collision
 - [ ] 11.3 Wall Collision
 - [ ] 11.4 Sliding Along Walls
